@@ -1,4 +1,4 @@
-sira-sdk-rest-javascript
+sira-sdk-rest-js
 =====================
 
 > Service for auto-generating Javascript services for Sira Rest API.
