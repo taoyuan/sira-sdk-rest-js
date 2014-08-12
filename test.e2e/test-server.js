@@ -65,6 +65,7 @@ app.use(morgan('dev'));
  */
 app.post('/setup', function (req, res, next) {
     var opts = req.body;
+    var template = opts.template;
     var name = opts.name;
     var models = opts.models;
     var setupFn = compileSetupFn(name, opts.setupFn);
@@ -102,7 +103,7 @@ app.post('/setup', function (req, res, next) {
             }
 
             try {
-                servicesScript = generator.services(sapp, name, apiUrl);
+                servicesScript = generator.services(template, sapp, name, apiUrl);
             } catch (err) {
                 console.error('Cannot generate services script:', err.stack);
                 servicesScript = 'throw new Error("Error generating services script.");';
