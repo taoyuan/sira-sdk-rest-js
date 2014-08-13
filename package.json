@@ -51,6 +51,7 @@
     "requirejs": "^2.1.9",
     "sira": "taoyuan/sira",
     "sira-core": "taoyuan/sira-core",
-    "sira-rest": "taoyuan/sira-rest"
+    "sira-express-rest": "taoyuan/sira-express-rest",
+    "sira-express-veriuser": "git://github.com/taoyuan/sira-express-veriuser"
   }
 }

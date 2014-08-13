@@ -7,8 +7,8 @@
 var _ = require('lodash');
 var express = require('express');
 var sira = require('sira');
-var siraCore = require('sira-core');
-var rest = require('sira-rest');
+var veriuser = require('sira-express-veriuser');
+var rest = require('sira-express-rest');
 var generator = require('..');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
@@ -135,7 +135,7 @@ function buildRouter(sapp, options) {
     options = options || {};
 
     var router = express.Router();
-    router.use(siraCore.veriuser(sapp));
+    router.use(veriuser(sapp));
     router.use(options.restApiRoot, rest(sapp));
 
     return router;
