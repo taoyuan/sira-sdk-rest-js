@@ -51,21 +51,24 @@ module.factory(
 */ -%>
       { 'id': '@id' },
       {
-<% meta.methods.forEach(function(action) {
+<%
+  var len = meta.methods.length;
+  for (var i = 0; i < len; i++) {
+     var action = meta.methods[i];
      var methodName = action.name.split('.').join('$');
 -%>
 <%   ngdocForMethod(modelName, methodName, action); -%>
         <%-: methodName | q %>: {
-          url: urlBase + <%-: action.getFullPath() | q %>,
-          method: <%-: action.getHttpMethod() | q %>,
+          url: urlBase + <%-: action.getFullPath() | q %>
+          , method: <%-: action.getHttpMethod() | q %>
 <% if (action.isReturningArray()) { -%>
-          isArray: true,
+          , isArray: true
 <% } -%>
 <% if (meta.isUser && methodName === 'login') { -%>
-          params: {
+          , params: {
             include: "user"
-          },
-          interceptor: {
+          }
+          , interceptor: {
             response: function(response) {
               var accessToken = response.data;
               SiraAuth.setUser(accessToken.id, accessToken.userId, accessToken.user);
@@ -75,7 +78,7 @@ module.factory(
             }
           }
 <% } else if (meta.isUser && methodName === 'logout') { -%>
-          interceptor: {
+          , interceptor: {
             response: function(response) {
               SiraAuth.clearUser();
               SiraAuth.save();
@@ -83,8 +86,9 @@ module.factory(
             }
           }
 <% } -%>
-        },
-<% }); // meta.methods.foreach -%>
+        }<% if (i < len - 1 || meta.isUser) { -%>,<% } -%>
+<% }; // meta.methods.foreach -%>
+
 <% if (meta.isUser) { -%>
 
         /**
@@ -115,7 +119,7 @@ module.factory(
               var id = SiraAuth.currentUserId;
               if (id == null) id = '__anonymous__';
               return id;
-            },
+            }
           },
           interceptor: {
             response: function(response) {
@@ -261,13 +265,13 @@ module
       this.accessTokenId = accessTokenId;
       this.currentUserId = userId;
       this.currentUserData = userData;
-    }
+    };
 
     SiraAuth.prototype.clearUser = function() {
       this.accessTokenId = null;
       this.currentUserId = null;
       this.currentUserData = null;
-    }
+    };
 
     return new SiraAuth();
 
@@ -320,7 +324,7 @@ module
         // that exactly fits our needs.
         var result = resource.upsert.call(this, {}, this, success, error);
         return result.$promise || result;
-      }
+      };
 
       return resource;
     };
